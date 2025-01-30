@@ -1,4 +1,9 @@
 import type { MetaFunction } from "@remix-run/node";
+import LandingPage from "@/components/LandingPage";
+import Navbar from "@/components/NavigationBar";
+import { LoaderFunction, json } from "@remix-run/node";
+import prisma from "prisma/Prisma";
+import { useLoaderData } from "@remix-run/react";
 
 export const meta: MetaFunction = () => {
   return [
@@ -7,14 +12,31 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+export const loader: LoaderFunction = async () => {
+  try {
+    console.log("Connection")
+    const AboutMe = await prisma.Profile.findMany(); // Fetch AboutMe data
+    return json({ AboutMe }); // Return both datasets
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return json({ error: "Failed to fetch data" }, { status: 500 });
+  }
+};
+
 export default function Index() {
+  const { AboutMe } = useLoaderData<any>();
+  
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="flex flex-col items-center gap-16">
-        <header className="flex flex-col items-center gap-9">
+  
+    <>
+    {/* <div className="flex h-screen items-center justify-center"> */}
+      <Navbar/>
+      {/* <div className="flex flex-col items-center gap-16"> */}
+        {/* <header className="flex flex-col items-center gap-9">
           <h1 className="leading text-2xl font-bold text-gray-800 dark:text-gray-100">
             Welcome to <span className="sr-only">Remix</span>
           </h1>
+         
           <div className="h-[144px] w-[434px]">
             <img
               src="/logo-light.png"
@@ -27,9 +49,10 @@ export default function Index() {
               className="hidden w-full dark:block"
             />
           </div>
-        </header>
-        <nav className="flex flex-col items-center justify-center gap-4 rounded-3xl border border-gray-200 p-6 dark:border-gray-700">
-          <p className="leading-6 text-gray-700 dark:text-gray-200">
+        </header> */}
+        {/* <nav className="flex flex-col items-center justify-center gap-4 rounded-3xl border border-gray-200 p-6 dark:border-gray-700"> */}
+
+          {/* <p className="leading-6 text-gray-700 dark:text-gray-200">
             What&apos;s next?
           </p>
           <ul>
@@ -46,10 +69,13 @@ export default function Index() {
                 </a>
               </li>
             ))}
-          </ul>
-        </nav>
-      </div>
-    </div>
+          </ul> */}
+        {/* </nav> */}
+        <body>
+        <LandingPage allData ={AboutMe}/>
+        </body>
+      {/* </div> */}
+      </>
   );
 }
 

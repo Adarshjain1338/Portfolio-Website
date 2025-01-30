@@ -1,6 +1,7 @@
 import { vitePlugin as remix } from "@remix-run/dev";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
+import path from 'path';
 
 declare module "@remix-run/node" {
   interface Future {
@@ -21,4 +22,17 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'app'),  // Adjust if necessary based on your project structure
+    }
+  },
+  define: {
+    'process.env': process.env, // Polyfill process.env for client-side
+  },
+  build: {
+    rollupOptions: {
+      external: ['process'], // Exclude `process` from bundling in client-side code
+    },
+  },
 });

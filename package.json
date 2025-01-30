@@ -8,15 +8,28 @@
     "dev": "remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/server/index.js",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "seed": "ts-node prisma/seed.js"
   },
   "dependencies": {
+    "@prisma/client": "^6.3.0",
+    "@radix-ui/react-menubar": "^1.1.5",
+    "@radix-ui/react-progress": "^1.1.1",
+    "@radix-ui/react-slot": "^1.1.1",
     "@remix-run/node": "^2.15.2",
     "@remix-run/react": "^2.15.2",
     "@remix-run/serve": "^2.15.2",
+    "@shadcn/ui": "^0.0.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "isbot": "^4.1.0",
+    "lucide-react": "^0.474.0",
+    "prisma": "^6.3.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.4.0",
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.15.2",
@@ -33,7 +46,8 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.4",
-    "typescript": "^5.1.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3",
     "vite": "^5.1.0",
     "vite-tsconfig-paths": "^4.2.1"
   },

@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Profile {
+  id          String   @id @default(uuid())
+  name        String
+  title       String   // e.g., "Full Stack Developer & Creative Artist"
+  bio         String   @db.Text
+  email       String
+  adminKey    String   // For admin panel access - store securely in .env
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  title       String
+  description String   @db.Text
+  thumbnail   String?
+  link        String?
+  category    ProjectCategory
+  featured    Boolean  @default(false)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  media       Media[]
+  technologies String[] // Array of technology names
+}
+
+model Skill {
+  id          String   @id @default(uuid())
+  name        String
+  category    SkillCategory
+  proficiency Int      // 1-5
+  icon        String?
+  order       Int      @default(0)
+}
+
+model SocialLink {
+  id       String   @id @default(uuid())
+  platform Platform
+  url      String
+}
+
+model Quote {
+  id        String   @id @default(uuid())
+  content   String   @db.Text
+  author    String?
+  featured  Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Media {
+  id        String   @id @default(uuid())
+  type      MediaType
+  url       String
+  title     String?
+  caption   String?
+  featured  Boolean  @default(false)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  
+  // Relations
+  project   Project? @relation(fields: [projectId], references: [id])
+  projectId String?
+}
+
+enum ProjectCategory {
+  DEVELOPMENT
+  PHOTOGRAPHY
+  VIDEO
+  OTHER
+}
+
+enum SkillCategory {
+  TECHNICAL
+  CREATIVE
+  SOFT
+}
+
+enum Platform {
+  GITHUB
+  LINKEDIN
+  TWITTER
+  INSTAGRAM
+  YOUTUBE
+  OTHER
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+  DOCUMENT
+}
