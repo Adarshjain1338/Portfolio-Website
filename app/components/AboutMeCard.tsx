@@ -1,12 +1,27 @@
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
+import { BsArrowUpRight } from 'react-icons/bs';
+import { Navigate, useNavigate } from '@remix-run/react';
 
-const AboutMeCard = (props: any) => {
+interface IAboutMeCardProps {
+  CardDetails: any;
+}
+
+const AboutMeCard = (props: IAboutMeCardProps) => {
+  const navigate = useNavigate();
+  const {CardDetails} = props;
+  const {name, email} = CardDetails[0];
+
+  function openAboutPage(){
+     navigate('/about');
+  }
+
 
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <CardTitle>About Me</CardTitle>
+        <CardTitle>About Me - {name}</CardTitle>
+        <CardTitle>  <BsArrowUpRight onClick={()=> openAboutPage()}/></CardTitle>
       </CardHeader>
       <CardContent>
         <CardDescription>
@@ -20,6 +35,7 @@ const AboutMeCard = (props: any) => {
           experimenting with new ideas, and contributing to the open-source
           community. I'm always eager to learn and grow, and I'm excited to
           collaborate with like-minded individuals.
+          {email}
         </CardDescription>
       </CardContent>
     </Card>

@@ -1,27 +1,16 @@
 import React from 'react';
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import myselfImage from '../lib/assests/images/myself.png'; // Import the image
 
 const PhotoCard = () => {
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader>
-        <CardTitle>About Me</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="flex justify-center mb-4">
-          {/* <img
-            src="/api/placeholder/400/400"
-            alt="Profile"
-            className=""
-          /> */}
-        </div>
-        <CardDescription>
-          Hi, I'm John Doe, a passionate web developer with expertise in modern
-          frontend technologies. I love creating engaging and user-friendly
-          applications.
-        </CardDescription>
-      </CardContent>
-    </Card>
+    <Card className={`col-span-3 row-span-2 overflow-hidden border-none `}>
+    <img
+      src={myselfImage}
+      alt="Profile"
+      className="w-full h-full object-cover"
+    />
+  </Card>
   );
 };
 

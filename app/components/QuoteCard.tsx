@@ -3,9 +3,9 @@ import { Card, CardDescription, CardHeader, CardTitle, CardContent } from './ui/
 
 function QuoteCard() {
     return (
-        <Card className="w-full max-w-md">
+        <Card className={`col-span-6 row-span-2 p-8 border-none basecard`}>
           <CardContent>
-            <div className="flex justify-center mb-4 text-5xl ">
+            <div className="text-4xl font-serif leading-tight flex items-center justify-between">
               <h1>Never Stop Exploring </h1>
             </div>
             

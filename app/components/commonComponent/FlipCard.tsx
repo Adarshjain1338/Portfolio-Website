@@ -44,6 +44,7 @@ const FlipCard = ({
   };
 
   return (
+    <>
     <div className="relative w-80 h-60 perspective-[1200px] cursor-pointer" onClick={handleFlip}>
       <div
         className={`relative w-full h-full [transform-style:preserve-3d] ${animationClasses[animationStyle]} ${
@@ -67,6 +68,7 @@ const FlipCard = ({
         )}
       </div>
     </div>
+    </>
   );
 };
 

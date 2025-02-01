@@ -1,10 +1,11 @@
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from './ui/button';
+import { Select } from './ui/select';
 
 const ContactCard = () => {
   return (
-    <Card className="w-full max-w-md">
+    <Card className={`col-span-3 row-span-1 basecard p-6 text-white border-none`}>
       <CardHeader>
         <CardTitle>Contact Me</CardTitle>
       </CardHeader>

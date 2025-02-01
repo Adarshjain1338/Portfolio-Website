@@ -1,7 +1,7 @@
 import { LoaderFunction } from "@remix-run/node";
 import { json, useLoaderData } from "@remix-run/react";
 import prisma from "prisma/Prisma";
-import AboutPage from "@/components/pages/AboutPage";
+import ContactPage from "@/components/pages/ContactPage";
 
 // First, let's define the type for your Profile data
 interface Profile {
@@ -30,10 +30,10 @@ export const loader: LoaderFunction = async () => {
   }
 };
 
-export default function About() {
+export default function Contact() {
   // Use the proper type for useLoaderData
   const { AboutMe } = useLoaderData<LoaderData>();
   console.log(AboutMe, "data");
 
-  return <AboutPage AboutDetails={AboutMe} />;
+  return <ContactPage />;
 }

@@ -13,12 +13,12 @@ const technicalSkills = [
 
 const NonTechnicalCard = () => {
   return (
-    <Card className="w-full max-w-md">
+    <>
       <CardHeader>
         <CardTitle>Non Technical Skills</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 gap-2">
           {technicalSkills.map((skill) => (
             <>
               <div key={skill.name} className="flex items-center justify-between ...">
@@ -29,7 +29,7 @@ const NonTechnicalCard = () => {
           ))}
         </div>
       </CardContent>
-    </Card>
+    </>
   );
 };
 
