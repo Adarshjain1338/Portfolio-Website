@@ -33,7 +33,7 @@ const LandingPage = (props: any) => {
           {/* Profile Image Card */}
           <PhotoCard />
           {/* Right Side Gallery */}
-          <Card className={`col-span-3 row-span-2 ${colors.darkGreen} p-6 border-none card technical-skills`}>
+          <Card className={`col-span-3 row-span-3 ${colors.darkGreen} p-6 border-none card technical-skills`}>
             <FlipCard childOne={<TechnicalCard />} childTwo={<NonTechnicalCard />} />
           </Card>
 
@@ -41,7 +41,7 @@ const LandingPage = (props: any) => {
           <ContactCard />
 
           {/* Contact Card */}
-          <Card className={`col-span-3 row-span- ${colors.lightBrown} p-6 border-none card highlight`}>
+          <Card className={`col-span-3 row-span-1 ${colors.lightBrown} p-6 border-none card highlight`}>
             <h3 className="font-playfair text-xl mb-2">Contact me</h3>
             <div className="flex space-x-4">
               <LuInstagram className="h-5 w-5" />

@@ -21,6 +21,7 @@ const TechnicalCard = () => {
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 gap-2 text-white">
+          <div className="aspect-video bg-[#A27B5C]/20 rounded-lg mb-4"></div>
           {technicalSkills.map((skill) => (
             <>
               <div key={skill.name} className="flex items-center justify-between ...">
