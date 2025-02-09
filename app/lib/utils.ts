@@ -8,6 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export const tableMetadata = {
   Profile: [
+    { name: "id", type: "text" },
     { name: "name", type: "text" },
     { name: "title", type: "text" },
     { name: "bio", type: "textarea" },
@@ -25,10 +26,10 @@ export const tableMetadata = {
     { name: "technologies", type: "array" },
   ],
   Skill: [
+    { name: "id", type: "text" },
     { name: "name", type: "text" },
     { name: "category", type: "select", options: ["TECHNICAL", "CREATIVE", "SOFT"] },
     { name: "proficiency", type: "number" },
-    { name: "icon", type: "text" },
     { name: "order", type: "number" },
   ],
   SocialLink: [

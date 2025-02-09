@@ -7,6 +7,7 @@ interface RequestBody {
 }
 
 interface tablemetadata {
+  id?: any;
   name: string;
   type: string;
   options?: string[];
@@ -52,6 +53,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       console.log('data', data)
       const processedItem: any = {};
       fields?.forEach((field) => {
+        console.log('field', field)
         if (field.columnName) {
           processedItem[field.name] = item[field.columnName];
         } else {
