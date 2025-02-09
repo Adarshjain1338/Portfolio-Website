@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectLabel } from "../ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Button } from "../ui/button";
-import { tableMetadata } from "@/lib/utils";
+import { AllProjectAPI } from "@/lib/apiURL";
+import axios from "axios";
 
 interface DynamicFormProps {
   tableName: string;
@@ -11,23 +12,64 @@ interface DynamicFormProps {
 
 export function DynamicForm({ tableName }: DynamicFormProps) {
   const [formData, setFormData] = useState<Record<string, any>>({});
+  const [tableFields, setTableFields] = useState<any[]>([]);
+  const [tableData, setTableData] = useState<any[]>([]);
 
+  // Fetch table details (fields and data) from the API
+  const getTableDetails = async () => {
+    try {
+      const response = await axios.post(AllProjectAPI.GetTableDetails, {
+        tableKey: tableName,
+      });
+      setTableFields(response.data.fields || []);
+      setTableData(response.data.data || []);
+
+      // Pre-fill formData with the first record (if available)
+      if (response.data.data && response.data.data.length > 0) {
+        const initialFormData: Record<string, any> = {};
+        response.data.fields.forEach((field: any) => {
+          initialFormData[field.name] = response.data.data[0][field.name] || "";
+        });
+        setFormData(initialFormData);
+      }
+
+      console.log(response, "API Called");
+    } catch (error) {
+      console.error("Error fetching table details:", error);
+    }
+  };
+
+  // Fetch data when the tableName changes
+  useEffect(() => {
+    getTableDetails();
+  }, [tableName]);
+
+  // Handle form field changes
   const handleChange = (field: string, value: any) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Form Data:", formData);
-    // Send formData to the backend API for processing
-  };
-
-  const fields = tableMetadata[tableName as keyof typeof tableMetadata];
+  // Handle form submission
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   console.log("Form Data:", formData);
+  //   // Send formData to the backend API for processing (e.g., update or create)
+  //   try {
+  //     // Example: Send updated data to the API
+  //     const response = await axios.post(AllProjectAPI.UpdateTableData, {
+  //       tableKey: tableName,
+  //       data: formData,
+  //     });
+  //     console.log("Update successful:", response.data);
+  //   } catch (error) {
+  //     console.error("Error updating table data:", error);
+  //   }
+  // };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={()=>alert("saved")} className="space-y-4">
       <h2 className="text-lg font-semibold animate-pulse">{tableName} Form</h2>
-      {fields.map((field:any) => (
+      {tableFields.map((field: any) => (
         <div key={field.name}>
           <label htmlFor={field.name} className="block text-sm font-medium text-gray-700">
             {field.name.charAt(0).toUpperCase() + field.name.slice(1)}
@@ -58,7 +100,7 @@ export function DynamicForm({ tableName }: DynamicFormProps) {
                 <SelectValue placeholder={`-- Select ${field.name} --`} />
               </SelectTrigger>
               <SelectContent>
-                {field.options?.map((option:any) => (
+                {field.options?.map((option: string) => (
                   <SelectItem key={option} value={option}>
                     {option}
                   </SelectItem>
@@ -66,17 +108,17 @@ export function DynamicForm({ tableName }: DynamicFormProps) {
               </SelectContent>
             </Select>
           )}
-        {field.type === "checkbox" && (
+          {field.type === "checkbox" && (
             <div className="flex items-center space-x-2 mt-1">
-                <input
-                    type="checkbox"
-                    id={field.name}
-                    checked={formData[field.name] || false}
-                    onChange={(e) => handleChange(field.name, e.target.checked)}
-                />
-                <label htmlFor={field.name}>Enable</label>
+              <input
+                type="checkbox"
+                id={field.name}
+                checked={formData[field.name] || false}
+                onChange={(e) => handleChange(field.name, e.target.checked)}
+              />
+              <label htmlFor={field.name}>Enable</label>
             </div>
-        )}
+          )}
           {field.type === "number" && (
             <Input
               type="number"
@@ -91,7 +133,9 @@ export function DynamicForm({ tableName }: DynamicFormProps) {
               type="text"
               id={field.name}
               value={formData[field.name]?.join(", ") || ""}
-              onChange={(e) => handleChange(field.name, e.target.value.split(",").map((s) => s.trim()))}
+              onChange={(e) =>
+                handleChange(field.name, e.target.value.split(",").map((s) => s.trim()))
+              }
               placeholder="Enter comma-separated values"
               className="mt-1 block w-full"
             />

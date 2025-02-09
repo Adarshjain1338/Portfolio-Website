@@ -18,7 +18,7 @@ model Profile {
   updatedAt   DateTime @updatedAt
 }
 
-model Project {
+model Projects {
   id          String   @id @default(uuid())
   title       String
   description String   @db.Text
@@ -33,7 +33,7 @@ model Project {
   technologies String[] // Array of technology names
 }
 
-model Skill {
+model Skills {
   id          String   @id @default(uuid())
   name        String
   category    SkillCategory
@@ -42,13 +42,13 @@ model Skill {
   order       Int      @default(0)
 }
 
-model SocialLink {
+model SocialLinks {
   id       String   @id @default(uuid())
   platform Platform
   url      String
 }
 
-model Quote {
+model Quotes {
   id        String   @id @default(uuid())
   content   String   @db.Text
   author    String?
@@ -67,7 +67,7 @@ model Media {
   createdAt DateTime @default(now())
   
   // Relations
-  project   Project? @relation(fields: [projectId], references: [id])
+  project   Projects? @relation(fields: [projectId], references: [id])
   projectId String?
 }
 
