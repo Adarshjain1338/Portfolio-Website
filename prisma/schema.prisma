@@ -22,8 +22,8 @@ model Projects {
   id          String   @id @default(uuid())
   title       String
   description String   @db.Text
-  thumbnail   String?
-  link        String?
+  imageUrl    String?
+  projectUrl  String?
   category    ProjectCategory
   featured    Boolean  @default(false)
   order       Int      @default(0)
@@ -66,7 +66,7 @@ model Media {
   createdAt DateTime @default(now())
   
   // Relations
-  project   Projects? @relation(fields: [projectId], references: [id])
+  project   Projects? @relation(fields: [id], references: [id])
   projectId String?
 }
 

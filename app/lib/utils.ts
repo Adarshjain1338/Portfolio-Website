@@ -15,7 +15,7 @@ export const tableMetadata = {
     { name: "email", type: "text" },
     { name: "adminKey", type: "text" },
   ],
-  Project: [
+  Projects: [
     { name: "title", type: "text" },
     { name: "description", type: "textarea" },
     { name: "thumbnail", type: "text" },
@@ -25,14 +25,14 @@ export const tableMetadata = {
     { name: "order", type: "number" },
     { name: "technologies", type: "array" },
   ],
-  Skill: [
-    { name: "id", type: "text" },
-    { name: "name", type: "text" },
-    { name: "category", type: "select", options: ["TECHNICAL", "CREATIVE", "SOFT"] },
-    { name: "proficiency", type: "number" },
-    { name: "order", type: "number" },
+  Skills: [
+    // { name: "id", type: "text" },
+    // { name: "name", type: "text" },
+    // { name: "category", type: "select", options: ["TECHNICAL", "CREATIVE", "SOFT"] },
+    // { name: "proficiency", type: "number" },
+    // { name: "order", type: "number" },
   ],
-  SocialLink: [
+  SocialLinks: [
     { name: "platform", type: "select", options: ["GITHUB", "LINKEDIN", "TWITTER", "INSTAGRAM", "YOUTUBE", "OTHER"] },
     { name: "url", type: "text" },
   ],

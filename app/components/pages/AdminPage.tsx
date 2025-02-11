@@ -15,12 +15,12 @@ export default function AdminPage() {
           <h1 className="text-xl font-bold mb-4">Admin Panel</h1>
           {/* Table Selection Dropdown */}
           <div className="mb-4">
-            <label htmlFor="table-select" className="block text-sm font-medium text-gray-700">
+            {/* <label htmlFor="table-select" className="block text-sm font-medium text-gray-700">
               Select Table
-            </label>
+            </label> */}
             <Select onValueChange={(value) => setSelectedTable(value)}>
               <SelectTrigger id="table-select" className="mt-1 w-1/2">
-                <SelectValue placeholder="-- Select a Table --" />
+                <SelectValue placeholder="Select Table" />
               </SelectTrigger>
               <SelectContent className="w-1/2">
                 {Object.keys(tableMetadata).map((tableName) => (

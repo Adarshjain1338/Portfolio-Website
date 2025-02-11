@@ -1,12 +1,12 @@
+import { Prisma } from "@prisma/client";
 import { json, ActionFunctionArgs } from "@remix-run/node";
 import prisma from "prisma/Prisma";
-import { tableMetadata } from "@/lib/utils";
 
 interface RequestBody {
   tableKey: string;
 }
 
-interface tablemetadata {
+interface TableMetadata {
   id?: any;
   name: string;
   type: string;
@@ -21,49 +21,63 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   try {
-    const requestBody = await request.json() as RequestBody;
+    const requestBody = (await request.json()) as RequestBody;
     const { tableKey } = requestBody;
 
     if (!tableKey) {
       return json({ error: "tableKey is required" }, { status: 400 });
     }
-    if (!tableMetadata.hasOwnProperty(tableKey)) {
-      return json({ error: "Invalid tableKey" }, { status: 400 });
+
+    // Get schema info dynamically
+    const schemaInfo = await prisma.$queryRaw<{ column_name: string; data_type: string }[]>(
+      Prisma.sql`SELECT column_name, data_type 
+                 FROM information_schema.columns 
+                 WHERE table_name = ${Prisma.raw(`'${tableKey}'`)}
+                 ORDER BY ordinal_position DESC;` // Reverse the order directly in SQL
+    );
+    schemaInfo.reverse();
+
+    if (!schemaInfo.length) {
+      return json({ error: "Invalid tableKey or table does not exist" }, { status: 400 });
     }
 
-    const fields: tablemetadata[] = tableMetadata[tableKey as keyof typeof tableMetadata];
+    // Convert schema info into metadata fields
+    const fields: TableMetadata[] = schemaInfo.map((column) => {
+      let fieldType = "text";
+      if (column.data_type.includes("integer")) {
+        fieldType = "number";
+      } else if (column.data_type.includes("boolean")) {
+        fieldType = "checkbox";
+      } else if (column.data_type.includes("character varying") && column.data_type.includes("[]")) {
+        fieldType = "select";
+      } else if (column.column_name.toLowerCase().includes("description")) {
+        fieldType = "textarea";
+      }
+      return {
+        name: column.column_name,
+        type: fieldType,
+      };
+    });
+    // Fetch table data dynamically
     let data: any[] = [];
-
     switch (tableKey) {
       case "Profile":
-        console.log("Profile Table");
         data = await prisma.profile.findMany();
         break;
-      case "Skill":
+      case "Skills":
         data = await prisma.skills.findMany();
         break;
-      case "Project":
-          data = await prisma.projects.findMany();
-          break;
+      case "Projects":
+        data = await prisma.projects.findMany();
+        break;
+      case "SocialLinks":
+        data = await prisma.socialLinks.findMany();
+        break;
       default:
         return json({ error: "Table not found in database" }, { status: 404 });
     }
 
-    const processedData = data.map((item) => {
-      console.log('data', data)
-      const processedItem: any = {};
-      fields?.forEach((field) => {
-        console.log('field', field)
-        if (field.columnName) {
-          processedItem[field.name] = item[field.columnName];
-        } else {
-          processedItem[field.name] = item[field.name];
-        }
-      });
-      return processedItem;
-    });
-
-    return json({ fields, data: processedData }, { status: 200 });
+    return json({ fields, data }, { status: 200 });
   } catch (error: any) {
     console.error("API Error:", error);
     return json(

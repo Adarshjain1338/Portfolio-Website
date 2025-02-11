@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "../components/ui/input";
 import {
   Select,
@@ -16,54 +16,88 @@ import {
   TableHeader,
   TableRow,
 } from "../components/ui/table";
+import { Trash2 } from "lucide-react";
 import { AllProjectAPI } from "@/lib/apiURL";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
-// Define the structure of table fields
 interface Field {
   name: string;
-  type: string;
+  type: "text" | "number" | "select";
   options?: string[];
 }
 
-// Define the props for SkillForm
+interface Skill {
+  id?: string;
+  isNew: boolean;
+  isEdited: boolean;
+  [key: string]: any;
+}
+
 interface SkillFormProps {
   tableFields: Field[];
-  tableData: any[];
+  tableData: Skill[];
   refreshData: () => void;
 }
 
 export function SkillForm({ tableFields, tableData, refreshData }: SkillFormProps) {
-    console.log(tableData, tableFields)
-  const [skills, setSkills] = useState<any[]>([tableData]);
+  const [skills, setSkills] = useState<Skill[]>(
+    tableData.map((skill) => ({ ...skill, isNew: false, isEdited: false }))
+  );
 
-  // Handle input changes
   const handleInputChange = (index: number, field: string, value: any) => {
-    const updatedSkills = [...skills];
-    updatedSkills[index] = { ...updatedSkills[index], [field]: value };
-    setSkills(updatedSkills);
+    setSkills((prevSkills) =>
+      prevSkills.map((skill, i) =>
+        i === index
+          ? {
+              ...skill,
+              [field]: field === "proficiency" || field === "order" ? parseInt(value, 10) || 0 : value.trim(),
+              isEdited: !skill.isNew,
+            }
+          : skill
+      )
+    );
   };
 
-  // Add a new empty skill row
+  useEffect(() => {
+    setSkills(
+      tableData.map((skill) => ({ ...skill, isNew: false, isEdited: false }))
+    );
+  }, [tableData]);
+
   const addSkillRow = () => {
-    const emptySkill: any = {};
-    tableFields.forEach(field => {
+    const emptySkill: Skill = { isNew: true, isEdited: false };
+    tableFields.forEach((field) => {
       emptySkill[field.name] = "";
     });
-    setSkills([...skills, emptySkill]);
+    setSkills((prev) => [...prev, emptySkill]);
   };
 
-  // Save skill data to the server
-  const saveSkillData = async () => {
-    try {
-      const response = await axios.post(AllProjectAPI.Skills.saveSkillData, { data: skills });
-      if (response.status === 200) {
-        toast.success("Skills saved successfully");
-        refreshData();
-      } else {
-        toast.error("Failed to save skills");
+  const deleteSkillRow = (index: number) => {
+    setSkills((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const validateSkills = (filteredSkills: Skill[]) => {
+    for (const skill of filteredSkills) {
+      for (const field of tableFields) {
+        const value = skill[field.name];
+        if (field.name !== "id" && (!value || (typeof value === "string" && !value.trim()))) {
+          toast.error(`${field.name} is required`);
+          return false;
+        }
       }
+    }
+    return true;
+  };
+
+  const saveSkillData = async () => {
+    const filteredSkills = skills.filter((skill) => skill.isNew || skill.isEdited);
+    if (filteredSkills.length === 0) return toast.error("No new or edited skills to save");
+    if (!validateSkills(filteredSkills)) return;
+    try {
+      await axios.post(AllProjectAPI.Skills.saveSkillData, { data: filteredSkills });
+      toast.success("Skills saved successfully");
+      refreshData();
     } catch (error) {
       console.error("Error saving skills:", error);
       toast.error("Failed to save skills");
@@ -74,37 +108,34 @@ export function SkillForm({ tableFields, tableData, refreshData }: SkillFormProp
     <div>
       <Toaster />
       <h2 className="text-lg font-semibold animate-pulse">Skill Table</h2>
-      <Button onClick={addSkillRow} className="mb-4">
-        Add Skill
-      </Button>
+      <Button onClick={addSkillRow} className="mb-4">Add Skill</Button>
       <Table>
         <TableHeader>
           <TableRow>
             {tableFields.map((field) => (
               <TableHead key={field.name}>{field.name.toUpperCase()}</TableHead>
             ))}
+            <TableHead>Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {skills.map((row, index) => (
-            <TableRow key={index}>
+            <TableRow key={row.id || index}>
               {tableFields.map((field) => (
                 <TableCell key={field.name}>
-                  {field.name === "id" ? (
-                    <Input
-                      type="text"
-                      value={row[field.name] || ""}
-                      disabled
-                    />
-                  ) : field.type === "text" ? (
+                  {field.type === "text" ? (
                     <Input
                       type="text"
                       value={row[field.name] || ""}
                       onChange={(e) => handleInputChange(index, field.name, e.target.value)}
+                      disabled={field.name === "id" && !row.isNew}
+                      size={field.name === "id" ? 1 : 20}
                     />
                   ) : field.type === "number" ? (
                     <Input
                       type="number"
+                      max={10}
+                      min={0}
                       value={row[field.name] || ""}
                       onChange={(e) => handleInputChange(index, field.name, e.target.value)}
                     />
@@ -114,28 +145,27 @@ export function SkillForm({ tableFields, tableData, refreshData }: SkillFormProp
                       defaultValue={row[field.name]}
                     >
                       <SelectTrigger>
-                        <SelectValue
-                          placeholder={`-- Select ${field.name} --`}
-                        />
+                        <SelectValue placeholder={`Select ${field.name}`} />
                       </SelectTrigger>
                       <SelectContent>
                         {field.options?.map((option) => (
-                          <SelectItem key={option} value={option}>
-                            {option}
-                          </SelectItem>
+                          <SelectItem key={option} value={option}>{option}</SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                   ) : null}
                 </TableCell>
               ))}
+              <TableCell>
+                <Button variant="ghost" onClick={() => deleteSkillRow(index)}>
+                  <Trash2 className="w-5 h-5 text-red-500" />
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <Button onClick={saveSkillData} className="mt-4">
-        Save Skills
-      </Button>
+      <Button onClick={saveSkillData} className="mt-4">Save Skills</Button>
     </div>
   );
 }

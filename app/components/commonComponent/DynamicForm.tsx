@@ -3,7 +3,6 @@ import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Button } from "../ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { AllProjectAPI } from "@/lib/apiURL";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
@@ -19,6 +18,10 @@ export function DynamicForm({ tableName }: DynamicFormProps) {
   const [tableData, setTableData] = useState<any[]>([]);
 
   useEffect(() => {
+    if(formData){ 
+      setFormData([]);
+      setTableData([]);
+    }
     getTableDetails();
   }, [tableName]);
 
@@ -26,9 +29,8 @@ export function DynamicForm({ tableName }: DynamicFormProps) {
     try {
       const response = await axios.post(AllProjectAPI.GetTableDetails, { tableKey: tableName });
       setTableFields(response.data.fields || []);
+      console.log(response.data.fields)
       setTableData(response.data.data || []);
-      console.log("first", tableName)
-      console.log('response', response)
       // Pre-fill formData with the first record (if available)
      
     } catch (error) {
@@ -47,7 +49,6 @@ export function DynamicForm({ tableName }: DynamicFormProps) {
       });
       setFormData(initialFormData);
     }
-  
     
   }, [tableData])
   
@@ -79,7 +80,7 @@ export function DynamicForm({ tableName }: DynamicFormProps) {
   return (
     <>
       <Toaster />
-      {tableName === "Skill" 
+      {tableName === "Skills" 
       ? (
         <SkillForm tableFields={tableFields} tableData={tableData} refreshData={getTableDetails} />) 
       : (
@@ -106,7 +107,7 @@ export function DynamicForm({ tableName }: DynamicFormProps) {
                   defaultValue={formData[field.name]}
                 >
                   <SelectTrigger className="mt-1 w-full">
-                    <SelectValue placeholder={`-- Select ${field.name} --`} />
+                    <SelectValue placeholder={`Select Table`} />
                   </SelectTrigger>
                   <SelectContent>
                     {field.options?.map((option: string) => (
