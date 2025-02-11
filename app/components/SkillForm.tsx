@@ -129,7 +129,7 @@ export function SkillForm({ tableFields, tableData, refreshData }: SkillFormProp
                       value={row[field.name] || ""}
                       onChange={(e) => handleInputChange(index, field.name, e.target.value)}
                       disabled={field.name === "id" && !row.isNew}
-                      size={field.name === "id" ? 1 : 20}
+                      size={field.name === "id" ? 1 : 3}
                     />
                   ) : field.type === "number" ? (
                     <Input
