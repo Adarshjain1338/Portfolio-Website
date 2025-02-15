@@ -1,6 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
 import LandingPage from "@/components/LandingPage";
-import Navbar from "@/components/NavigationBar";
 import { LoaderFunction, json } from "@remix-run/node";
 import prisma from "prisma/Prisma";
 import { useLoaderData } from "@remix-run/react";
@@ -23,13 +22,13 @@ export const loader: LoaderFunction = async () => {
 };
 
 export default function Index() {
-  const { AboutMe } = useLoaderData<any>();
+  // const { AboutMe } = useLoaderData<any>();
   
   return (
   
     <>
         <body>
-        <LandingPage AboutMeCardDetails = {AboutMe}/>
+        <LandingPage/>
         </body>
       </>
   );

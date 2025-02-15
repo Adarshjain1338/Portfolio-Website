@@ -1,16 +1,18 @@
 // Variables for color palette
-$primary-color-1: #4098ef; // Light Grey
-$primary-color-2: #28394a; // Dark Grey
-$secondary-color: #cdac6e; // Grey
-$text-color: #dde3e9; // Darker Grey
+$primary-color-1: #414A39; // Light Grey
+$primary-color-2: #9A744D; // Dark Grey
+$secondary-color: #DCC1A6; // Grey
+$text-color: #0080ff; // Darker Grey
+$text-color-light: #DCC1A6; // Light Grey
+$text-color-dark: #1d1c1c; // Black
 $font-primary: 'Playfair Display', serif;
-$font-secondary: 'Open Sans', sans-serif;
+$font-secondary: 'Playfair Display', sans-serif;
 
 // Global styles
 body {
-  font-family: $font-secondary;
-  background-color: $primary-color-1;
-  color: $text-color;
+  // font-family: $font-secondary;
+  background-color: #1e1e1e;
+  color:$text-color-light;
   margin: 0;
   padding: 0;
 }
@@ -24,22 +26,30 @@ body {
 
   &.highlight {
     background-color: $primary-color-2;
-    color: $text-color;
+    // color:$text-color-light;
   }
 
   &.technical-skills  {
-    background-color: $primary-color-2;
-    color: $text-color;
+    // background-color: $primary-color-2;
+    color: $text-color-light;
   }
 
   
 }
-
-.basecard{
-  background-color: $primary-color-2;
-  color: $text-color;
+.baseColor{
+  background-color: $secondary-color;
 }
 
+.basecard_color_primary{
+  background-color: $primary-color-1;
+  color:$text-color-light;
+}
+
+
+.basecard_color_secondary {
+  background-color: $primary-color-2;
+  color: $text-color-dark;
+}
 // Header
 header {
   background-color: $primary-color-1;
@@ -49,7 +59,7 @@ header {
   align-items: center;
 
   .logo {
-    color: $text-color;
+    color:$text-color-light;
     font-size: 1.5rem;
     font-weight: bold;
     font-family: $font-primary;
@@ -60,7 +70,7 @@ header {
     gap: 1rem;
 
     a {
-      color: $text-color;
+      color: $text-color-light;
       text-decoration: none;
       font-weight: bold;
     }
@@ -72,13 +82,13 @@ footer {
   background-color: $primary-color-1;
   padding: 1rem;
   text-align: center;
-  color: $text-color;
+  color: $text-color-light;
 
   .contact-info {
     margin-bottom: 1rem;
 
     a {
-      color: $text-color;
+      color: $text-color-light;
       text-decoration: none;
     }
   }
@@ -89,7 +99,7 @@ footer {
     gap: 1rem;
 
     a {
-      color: $text-color;
+      color: $text-color-light;
       font-size: 1.2rem;
     }
   }

@@ -1,7 +1,7 @@
 import { LoaderFunction } from "@remix-run/node";
 import { json, useLoaderData } from "@remix-run/react";
+import ContactPage from "../components/pages/ContactPage";
 import prisma from "prisma/Prisma";
-import ContactPage from "@/components/pages/ContactPage";
 
 // First, let's define the type for your Profile data
 interface Profile {

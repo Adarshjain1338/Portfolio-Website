@@ -12,6 +12,7 @@
     "seed": "ts-node prisma/seed.js"
   },
   "dependencies": {
+    "@next/font": "^14.2.15",
     "@prisma/client": "^6.3.1",
     "@radix-ui/react-menubar": "^1.1.5",
     "@radix-ui/react-progress": "^1.1.1",

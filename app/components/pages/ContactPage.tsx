@@ -19,7 +19,7 @@ const ContactPage = () => {
 
     return (
         <div className=''>
-            <Card className="max-w-md mx-auto p-6  shadow-lg rounded-lg mt-6 basecard p-2 text-white">
+            <Card className="max-w-md mx-auto p-6  shadow-lg rounded-lg mt-6 basecard_color_primary p-2 text-white">
                 <h3 className="text-2xl font-playfair mb-6 text-center">Contact Me</h3>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     <div>

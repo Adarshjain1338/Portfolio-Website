@@ -1,9 +1,5 @@
-import React from 'react';
 import { Card } from './ui/card';
-import { Link } from '@remix-run/react';
-import { LuGithub, LuInstagram, LuLinkedin, LuTwitter } from 'react-icons/lu';
-import { Progress } from './ui/progress';
-import myself from '../lib/assests/images/myself.png'
+import { LuInstagram, LuLinkedin, LuTwitter } from 'react-icons/lu';
 import Navbar from './NavigationBar';
 import SocialIcons from './SocialCard';
 import TechnicalCard from './TechnicalCard';
@@ -14,28 +10,26 @@ import PhotoCard from './PhotoCard';
 import ContactCard from './ContactCard';
 import '../global.scss'
 
-const LandingPage = (props: any) => {
+const LandingPage = () => {
   const colors = {
     darkGreen: 'bg-[#2C3639]',
     lightBrown: 'bg-[#A27B5C]',
   };
 
   return (
-    <div className="min-h-screen dashboard p-5">
-      <Card className='dashboard-card p-3'>
+    <div className="min-h-screen dashboard p-2  ">
+      <Card className='dashboard-card p-1 baseColor border-none align-bottom'>
         {/* Main Container */}
         {/* Navigation */}
         <Navbar />
         {/* Grid Layout */}
-        <div className="grid grid-cols-12 gap-6 auto-rows-[200px]">
+        <div className="grid grid-cols-12 gap-2 auto-rows-[200px]">
           {/* Hero Text Card */}
           <QuoteCard />
           {/* Profile Image Card */}
           <PhotoCard />
           {/* Right Side Gallery */}
-          <Card className={`col-span-3 row-span-3 ${colors.darkGreen} p-6 border-none card technical-skills`}>
             <FlipCard childOne={<TechnicalCard />} childTwo={<NonTechnicalCard />} />
-          </Card>
 
           {/* Bio Card */}
           <ContactCard />

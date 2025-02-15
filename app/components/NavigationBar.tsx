@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, useNavigate } from '@remix-run/react';
 import { Button } from './ui/button';
 // import { Menubar, MenubarMenu, MenubarContent, MenubarItem, MenubarSeparator, MenubarTrigger } from './ui/menubar';
@@ -11,7 +10,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="flex justify-between items-center mb-6 text-[#ffffff] basecard rounded-md p-2 mt-6">
+    <nav className="flex justify-between items-center text-[#ffffff] basecard_color_primary rounded-md p-2 mt-1 mb-2">
       <Link to="/">
         <h1 className="text-2xl font-serif">Adarsh Jain</h1>
       </Link>

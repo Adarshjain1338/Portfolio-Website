@@ -7,6 +7,7 @@ import {
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
 
+
 import "./tailwind.css";
 
 export const links: LinksFunction = () => [
@@ -23,7 +24,11 @@ export const links: LinksFunction = () => [
   {
     rel: "stylesheet",
     href:"https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap"
-  }
+  },
+  {
+    rel: "stylesheet",
+    href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap",
+  },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {

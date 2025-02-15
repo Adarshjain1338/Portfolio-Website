@@ -1,5 +1,4 @@
-import React from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import {Card, CardHeader, CardTitle, CardContent } from '../components/ui/card';
 import { Progress } from './ui/progress';
 
 const technicalSkills = [
@@ -14,21 +13,23 @@ const technicalSkills = [
 const NonTechnicalCard = () => {
   return (
     <>
-      <CardHeader>
-        <CardTitle>Non Technical Skills</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 gap-2">
-          {technicalSkills.map((skill) => (
-            <>
-              <div key={skill.name} className="flex items-center justify-between ...">
-                <span>{skill.name}</span>
-              </div>
-              <Progress value={skill.progress} className='flex items-center justify-between' />
-            </>
-          ))}
-        </div>
-      </CardContent>
+      <Card className={`w-[23.1rem] col-span-3 row-span-3 p-6 border-none card technical-skills basecard_color_primary`}>
+        <CardHeader>
+          <CardTitle>Non Technical Skills</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 gap-2">
+            {technicalSkills.map((skill) => (
+              <>
+                <div key={skill.name} className="flex items-center justify-between ...">
+                  <span>{skill.name}</span>
+                </div>
+                <Progress value={skill.progress} className='flex items-center justify-between' />
+              </>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </>
   );
 };
