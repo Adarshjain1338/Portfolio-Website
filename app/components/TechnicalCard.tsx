@@ -14,10 +14,12 @@ const technicalSkills = [
 const TechnicalCard = () => {
   return (
     <>
-      <Card className={` w-[23.1rem] col-span-3 row-span-3 border-none card technical-skills basecard_color_primary`}>
-        <CardHeader>
+      <Card className={` w-[23rem] h-full col-span-3 row-span-3 border-none card technical-skills basecard_color_primary`}>
+        <CardHeader >
           <CardTitle>Technical Skills</CardTitle>
-          <CardTitle className='absolute top-2 right-2'>  <BsArrowUpRight /></CardTitle>
+          <div className="absolute top-2 right-2 text-white bg-[#9A744D] rounded-full">
+        <BsArrowUpRight className="text-lg opacity-70 hover:opacity-100 transition-opacity" />
+      </div>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 gap-2 text-white">

@@ -45,7 +45,7 @@ const FlipCard = ({
 
   return (
     <>
-    <div className="relative w-80 h-60 perspective-[1200px] cursor-pointer" onClick={handleFlip}>
+    <div className="w-[23.1rem] col-span-3 row-span-3 perspective-[1200px] cursor-pointer" onClick={handleFlip}>
       <div
         className={`relative w-full h-full [transform-style:preserve-3d] ${animationClasses[animationStyle]} ${
           flipped ? (rotateAxis === "X" ? "[transform:rotateX(180deg)]" : "[transform:rotateY(180deg)]") : ""

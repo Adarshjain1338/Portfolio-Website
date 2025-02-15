@@ -27,7 +27,7 @@ const ContactCard = () => {
   return (
     <Card className="col-span-4 row-span-1  p-4 text-white border-none relative flex flex-col justify-between basecard_color_primary">
       {/* Arrow Icon - Positioned in the top-right */}
-      <CardHeader className="absolute top-2 right-2">
+      <CardHeader className="absolute top-2 right-2 text-white bg-[#9A744D] rounded-full">
         <BsArrowUpRight className="text-lg opacity-70 hover:opacity-100 transition-opacity" />
       </CardHeader>
 

@@ -13,12 +13,14 @@ const technicalSkills = [
 const NonTechnicalCard = () => {
   return (
     <>
-      <Card className={`w-[23.1rem] col-span-3 row-span-3 p-6 border-none card technical-skills basecard_color_primary`}>
+      <Card className={`w-[23.1rem] h-full col-span-3 row-span-3 p-6 border-none card technical-skills basecard_color_primary`}>
         <CardHeader>
           <CardTitle>Non Technical Skills</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 gap-2">
+          <div className="aspect-video bg-[#ffffff]/20 rounded-lg mb-4"></div>
+
             {technicalSkills.map((skill) => (
               <>
                 <div key={skill.name} className="flex items-center justify-between ...">

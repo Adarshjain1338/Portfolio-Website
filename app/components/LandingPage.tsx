@@ -1,5 +1,4 @@
-import { Card } from './ui/card';
-import { LuInstagram, LuLinkedin, LuTwitter } from 'react-icons/lu';
+import { Card, CardHeader } from './ui/card';
 import Navbar from './NavigationBar';
 import SocialIcons from './SocialCard';
 import TechnicalCard from './TechnicalCard';
@@ -9,6 +8,7 @@ import QuoteCard from './QuoteCard';
 import PhotoCard from './PhotoCard';
 import ContactCard from './ContactCard';
 import '../global.scss'
+import { BsArrowUpRight } from 'react-icons/bs';
 
 const LandingPage = () => {
   const colors = {
@@ -17,31 +17,23 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="min-h-screen dashboard p-2  ">
-      <Card className='dashboard-card p-1 baseColor border-none align-bottom'>
-        {/* Main Container */}
-        {/* Navigation */}
+    <div className="min-h-screen dashboard p-3  ">
+      <Card className='dashboard-card p-1 pt-1 baseColor border-none align-bottom'>
         <Navbar />
-        {/* Grid Layout */}
-        <div className="grid grid-cols-12 gap-2 auto-rows-[200px]">
-          {/* Hero Text Card */}
+        <div className="grid grid-cols-12 gap-3 auto-rows-[200px]">
           <QuoteCard />
-          {/* Profile Image Card */}
           <PhotoCard />
-          {/* Right Side Gallery */}
-            <FlipCard childOne={<TechnicalCard />} childTwo={<NonTechnicalCard />} />
-
-          {/* Bio Card */}
+          <FlipCard childOne={<TechnicalCard />} childTwo={<NonTechnicalCard />} />
           <ContactCard />
-
           {/* Contact Card */}
-          <Card className={`col-span-3 row-span-1 ${colors.lightBrown} p-6 border-none card highlight`}>
-            <h3 className="font-playfair text-xl mb-2">Contact me</h3>
-            <div className="flex space-x-4">
-              <LuInstagram className="h-5 w-5" />
-              <LuTwitter className="h-5 w-5" />
-              <LuLinkedin className="h-5 w-5" />
-            </div>
+          <Card className="col-span-3 row-span-1 basecard_color_secondary p-6 border-none flex flex-col justify-between relative text-base ">
+          
+            <CardHeader className="absolute top-2 right-2 text-white bg-[#414A39] rounded-full">
+              <BsArrowUpRight className="text-lg opacity-70 hover:opacity-100 transition-opacity" />
+            </CardHeader>
+            <h1 className="text-base font-serif text-4xl text-[#3D3D3D]">
+              Contact <span className="italic font-light">me</span>
+            </h1>
           </Card>
           <SocialIcons />
         </div>
